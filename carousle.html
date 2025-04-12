@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Carousel</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #a445b2, #d41872);
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .carousel-container {
+      perspective: 1000px;
+    }
+
+    .carousel {
+      width: 300px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+
+    .carousel-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      backface-visibility: hidden;
+    }
+
+    .carousel-card h2 {
+      margin: 0 0 10px;
+    }
+
+    .carousel-card p {
+      font-size: 0.9em;
+      color: #333;
+    }
+
+    .buttons {
+      margin-top: 30px; /* Increased space to lower buttons */
+      text-align: center;
+    }
+
+    button {
+      background-color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="carousel-container">
+    <div class="carousel" id="carousel">
+      <div class="carousel-card" style="transform: rotateY(0deg) translateZ(400px);">
+        <div>
+          <h2>Air Quality</h2>
+          <p>Monitor and improve air quality for a healthier environment.</p>
+        </div>
+      </div>
+      <div class="carousel-card" style="transform: rotateY(72deg) translateZ(400px);">
+        <div>
+          <h2>Water</h2>
+          <p>Track water usage and promote conservation.</p>
+        </div>
+      </div>
+      <div class="carousel-card" style="transform: rotateY(144deg) translateZ(400px);">
+        <div>
+          <h2>Electricity</h2>
+          <p>Optimize energy consumption and reduce waste.</p>
+        </div>
+      </div>
+      <div class="carousel-card" style="transform: rotateY(216deg) translateZ(400px);">
+        <div>
+          <h2>Soil</h2>
+          <p>Maintain soil health and reduce degradation.</p>
+        </div>
+      </div>
+      <div class="carousel-card" style="transform: rotateY(288deg) translateZ(400px);">
+        <div>
+          <h2>Solar Panels</h2>
+          <p>Utilize solar energy for sustainable power generation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="rotateCarousel(-1)">&#8592; Prev</button>
+      <button onclick="rotateCarousel(1)">Next &#8594;</button>
+    </div>
+  </div>
+
+  <script>
+    let angle = 0;
+
+    function rotateCarousel(direction) {
+      angle += direction * 72; // 360/5 = 72
+      document.getElementById("carousel").style.transform = `translateZ(-400px) rotateY(${angle}deg)`;
+    }
+  </script>
+
+</body>
+</html>
