@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoNest - Electricity Usage Tracker</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: space-between;
+    }
+
+    .info-section, .form-section {
+      flex: 1 1 48%;
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-section {
+      background: linear-gradient(to top left, #ff7043, #f57c00);
+      color: #fff;
+    }
+
+    .info-section h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .info-card h4 {
+      color: #f57c00;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .info-card p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .form-section h3 {
+      color: #f57c00;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #424242;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      background-color: #fafafa;
+      transition: background-color 0.3s ease;
+    }
+
+    input:focus {
+      background-color: #fff8e1;
+      outline: none;
+      border-color: #f57c00;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 15px;
+      background: #f57c00;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff5722;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #757575;
+      text-align: center;
+    }
+
+    canvas {
+      margin-top: 40px;
+      width: 100% !important;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Tooltip Styling */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .info-section, .form-section {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Info Section -->
+    <div class="info-section">
+      <h2>⚡ Track & Reduce Your Electricity Usage</h2>
+
+      <div class="info-card">
+        <h4>Why Track Your Usage?</h4>
+        <p>By tracking your electricity consumption, you can identify patterns and find opportunities to save on your energy bills, reduce waste, and minimize your environmental impact.</p>
+      </div>
+
+      <div class="info-card">
+        <h4>What Are the Key Appliances?</h4>
+        <p>Air conditioners, lights, fridges, and fans all consume electricity in varying amounts. By monitoring their usage, you can make informed decisions to cut back on unnecessary consumption.</p>
+      </div>
+
+      <div class="info-card">
+        <h4>How Can I Save Energy?</h4>
+        <p>Simple steps like turning off appliances when not in use, using energy-efficient devices, or switching to LED lights can dramatically reduce energy consumption.</p>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-section">
+      <h3>💡 Enter Your Daily Appliance Usage</h3>
+
+      <label for="fan">Fan (hrs/day):</label>
+      <input type="number" id="fan" placeholder="e.g. 6" />
+
+      <label for="light">Light (hrs/day):</label>
+      <input type="number" id="light" placeholder="e.g. 5" />
+
+      <label for="fridge">Fridge (hrs/day):</label>
+      <input type="number" id="fridge" placeholder="e.g. 24" />
+
+      <label for="ac">AC (hrs/day):</label>
+      <input type="number" id="ac" placeholder="e.g. 3" />
+
+      <button onclick="calculateElectricity()">Generate Report</button>
+
+      <div class="note">
+        <span class="tooltip">*More Info
+          <span class="tooltiptext">Approximate wattage: Fan (75W), Light (15W), Fridge (150W), AC (1000W).</span>
+        </span>
+      </div>
+
+      <canvas id="usageChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    let chart;
+
+    function calculateElectricity() {
+      const fanHours = parseFloat(document.getElementById('fan').value) || 0;
+      const lightHours = parseFloat(document.getElementById('light').value) || 0;
+      const fridgeHours = parseFloat(document.getElementById('fridge').value) || 0;
+      const acHours = parseFloat(document.getElementById('ac').value) || 0;
+
+      // Approximate wattage for each appliance
+      const wattages = {
+        fan: 75,
+        light: 15,
+        fridge: 150,
+        ac: 1000
+      };
+
+      const kWh = {
+        Fan: (fanHours * wattages.fan) / 1000,
+        Light: (lightHours * wattages.light) / 1000,
+        Fridge: (fridgeHours * wattages.fridge) / 1000,
+        AC: (acHours * wattages.ac) / 1000
+      };
+
+      const labels = Object.keys(kWh);
+      const data = Object.values(kWh);
+
+      const ctx = document.getElementById('usageChart').getContext('2d');
+
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Electricity Usage (kWh)',
+            data: data,
+            backgroundColor: ['#4caf50', '#ffeb3b', '#2196f3', '#e91e63'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            tooltip: {
+              enabled: true,
+              backgroundColor: '#333',
+              titleColor: '#fff',
+              bodyColor: '#fff',
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
+
+
+</body>
+</html>

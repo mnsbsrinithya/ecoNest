@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EcoNest - Water Usage</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e3f2fd;
+      margin: 0;
+      padding: 20px;
+      color: #01579b;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .overview {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .info-box {
+      flex: 1 1 45%;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .info-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .info-box h3 {
+      margin-bottom: 10px;
+      color: #0288d1;
+    }
+
+    .info-box p {
+      font-size: 14px;
+      color: #455a64;
+    }
+
+    .image-box {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    .image-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 14px;
+      margin-top: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .tracker {
+      max-width: 450px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .tracker h2 {
+      text-align: center;
+      color: #0277bd;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      background: #0288d1;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #01579b;
+    }
+
+    #feedback {
+      margin-top: 25px;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚰 Water Sustainability Insights</h1>
+
+  <div class="overview">
+    <div class="info-box">
+      <h3>Why Track Water?</h3>
+      <p>
+        Tracking water helps in reducing wastage, optimizing consumption, and building sustainable habits.
+        Households can save thousands of liters annually just by monitoring daily usage.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Global Water Stats 🌍</h3>
+      <p>
+        1 in 3 people globally lack access to safe drinking water. Responsible usage today ensures availability tomorrow.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Did You Know?</h3>
+      <p>
+        A single dripping tap can waste up to 15 liters of water a day. Fixing leaks is one of the easiest ways to save water.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Eco Tip 💡</h3>
+      <p>
+        Install low-flow showerheads and dual-flush toilets to cut down water usage by up to 50%.
+      </p>
+    </div>
+
+    <div class="image-box">
+      <img src="https://images.unsplash.com/photo-1586082035684-940ef54c920d?auto=format&fit=crop&w=900&q=60" alt="Water conservation" />
+    </div>
+  </div>
+
+  <div class="tracker">
+    <h2>💧 Water Usage Tracker</h2>
+
+    <label for="liters">Water Used (Liters):</label>
+    <input type="number" id="liters" placeholder="e.g. 300" />
+
+    <label for="tapType">Tap Type:</label>
+    <select id="tapType">
+      <option value="shower">Shower</option>
+      <option value="kitchen">Kitchen</option>
+      <option value="washing">Washing Machine</option>
+      <option value="outdoor">Outdoor</option>
+    </select>
+
+    <button onclick="analyzeWater()">Analyze Usage</button>
+
+    <div id="feedback"></div>
+  </div>
+
+  <script>
+    function analyzeWater() {
+      const liters = parseInt(document.getElementById('liters').value);
+      const feedback = document.getElementById('feedback');
+      feedback.style.display = 'block';
+
+      const average = 250;
+
+      if (liters <= average) {
+        feedback.innerText = "✅ On track! Your water usage is within the average range.";
+        feedback.style.background = "#b2ebf2";
+        feedback.style.color = "#004d40";
+      } else {
+        const excess = liters - average;
+        const percent = Math.round((excess / average) * 100);
+        feedback.innerText = `⚠️ High Usage! You're using ${percent}% more water than average.`;
+        feedback.style.background = "#ffe082";
+        feedback.style.color = "#e65100";
+      }
+    }
+  </script>
+
+</body>
+</html>

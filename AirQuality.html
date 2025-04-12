@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoNest - Air Quality</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+      padding: 30px;
+      color: #37474f;
+    }
+
+    h1 {
+      text-align: center;
+      color: #004d40;
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .intro p {
+      font-size: 16px;
+      color: #546e7a;
+      line-height: 1.6;
+    }
+
+    .main-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .info-card {
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      width: 48%;
+      min-width: 300px;
+      transition: 0.3s;
+    }
+
+    .info-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .info-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 18px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 10px;
+      color: #00695c;
+    }
+
+    .card-content p {
+      font-size: 14px;
+      color: #607d8b;
+      line-height: 1.5;
+    }
+
+    /* Air Quality Checker Styling */
+    .checker-box {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      width: 100%;
+      max-width: 400px;
+      margin: 40px auto;
+    }
+
+    .checker-box h2 {
+      text-align: center;
+      color: #00796b;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #004d40;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background: #00796b;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #004d40;
+    }
+
+    #result {
+      margin-top: 25px;
+      padding: 18px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 17px;
+      display: none;
+      color: #263238;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    @media(max-width: 768px) {
+      .main-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .info-card, .checker-box {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌱 EcoNest - Air Quality Module</h1>
+  <div class="intro">
+    <p>Welcome to EcoNest’s Air Quality Dashboard. Air pollution affects every breath we take. Through real-time monitoring and easy-to-use tools, we help you track and improve the air around you.</p>
+  </div>
+
+  <div class="main-grid">
+    <div class="info-card">
+      <img src="https://source.unsplash.com/400x200/?clean-air" alt="Clean Air">
+      <div class="card-content">
+        <h3>Why Air Quality Matters</h3>
+        <p>Poor air quality can lead to respiratory issues, fatigue, and long-term health risks. EcoNest helps you monitor it right from your home.</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <img src="https://source.unsplash.com/400x200/?pollution,city" alt="Pollution">
+      <div class="card-content">
+        <h3>Urban Pollution Impact</h3>
+        <p>Traffic and industry in cities contribute major pollutants like PM2.5, NO2, and ozone. Know what's in the air near you, in real time.</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <img src="https://source.unsplash.com/400x200/?forest,air" alt="Natural Filter">
+      <div class="card-content">
+        <h3>Nature as a Filter</h3>
+        <p>Forests, wetlands, and green spaces naturally improve air quality. Learn how sustainable design can bring nature back into your environment.</p>
+      </div>
+    </div>
+
+    <div class="checker-box">
+      <h2>🫁 Air Quality Checker</h2>
+
+      <label for="aqi">Enter AQI (Air Quality Index):</label>
+      <input type="number" id="aqi" placeholder="e.g. 75" />
+
+      <label for="pm25">PM2.5 (µg/m³):</label>
+      <input type="number" id="pm25" placeholder="e.g. 35" />
+
+      <label for="pm10">PM10 (µg/m³):</label>
+      <input type="number" id="pm10" placeholder="e.g. 80" />
+
+      <label for="pollutant">Main Pollutant:</label>
+      <select id="pollutant">
+        <option value="O3">Ozone (O₃)</option>
+        <option value="PM2.5">PM2.5</option>
+        <option value="PM10">PM10</option>
+        <option value="CO">Carbon Monoxide (CO)</option>
+        <option value="SO2">Sulfur Dioxide (SO₂)</option>
+        <option value="NO2">Nitrogen Dioxide (NO₂)</option>
+      </select>
+
+      <button onclick="checkAQI()">Check Status</button>
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    function checkAQI() {
+      const aqi = parseInt(document.getElementById('aqi').value);
+      const result = document.getElementById('result');
+
+      result.style.display = 'block';
+
+      if (aqi <= 50) {
+        result.innerText = "Good 🌿 — Air quality is healthy!";
+        result.style.background = "#c8e6c9";
+      } else if (aqi <= 100) {
+        result.innerText = "Moderate 🍃 — Acceptable, but sensitive groups be cautious.";
+        result.style.background = "#fff9c4";
+      } else if (aqi <= 200) {
+        result.innerText = "Unhealthy ⚠️ — Reduce outdoor activity.";
+        result.style.background = "#ffe0b2";
+      } else {
+        result.innerText = "Hazardous 🚫 — Avoid going out!";
+        result.style.background = "#ffcdd2";
+      }
+    }
+  </script>
+
+</body>
+</html>
+<!--Bonus: API Integration (Live AQI from City)
+Wanna go next-level and pull real-time AQI from an external API? If yes, I can give you a version using OpenWeatherMap AQI API (you’ll need a free API key).
+
+Would you like me to add the live AQI city-based version too-->

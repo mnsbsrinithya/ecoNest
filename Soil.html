@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoNest - Soil Fertility</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f8e9;
+      padding: 30px;
+      margin: 0;
+      color: #33691e;
+    }
+
+    .wrapper {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .info-section {
+      flex: 1 1 40%;
+      background: linear-gradient(to bottom right, #e8f5e9, #c5e1a5);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .info-section h2 {
+      color: #558b2f;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: #ffffff;
+      border-left: 5px solid #8bc34a;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+
+    .info-card h4 {
+      margin: 0 0 5px;
+      color: #689f38;
+    }
+
+    .info-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #5d4037;
+    }
+
+    .info-section img {
+      width: 100%;
+      border-radius: 14px;
+      margin-top: 20px;
+    }
+
+    .form-section {
+      flex: 1 1 55%;
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    }
+
+    .form-section h3 {
+      text-align: center;
+      color: #689f38;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #33691e;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      background: #7cb342;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #558b2f;
+    }
+
+    #result {
+      margin-top: 25px;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-align: center;
+      display: none;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="info-section">
+      <h2>🌾 Soil Wisdom</h2>
+
+      <div class="info-card">
+        <h4>Healthy Soil = Healthy Planet</h4>
+        <p>Fertile soil supports plant growth, reduces erosion, and captures carbon. Keep it alive!</p>
+      </div>
+
+      <div class="info-card">
+        <h4>Did You Know? 🧪</h4>
+        <p>Soil pH between 6.0 and 7.5 is ideal for most crops. Anything too acidic or alkaline harms roots.</p>
+      </div>
+
+      <div class="info-card">
+        <h4>Tip 🌱</h4>
+        <p>Mix organic compost every few weeks. It boosts nutrients and balances soil texture naturally.</p>
+      </div>
+
+      <img src="https://images.unsplash.com/photo-1606925797305-6f1f5c05cfa6?auto=format&fit=crop&w=1000&q=60" alt="Soil with plants">
+    </div>
+
+    <div class="form-section">
+      <h3>🌿 Soil Fertility Checker</h3>
+
+      <label for="soilType">Soil Type:</label>
+      <select id="soilType">
+        <option value="clay">Clay</option>
+        <option value="loamy">Loamy</option>
+        <option value="sandy">Sandy</option>
+      </select>
+
+      <label for="phLevel">Estimated pH Level (1–14):</label>
+      <input type="number" id="phLevel" min="1" max="14" placeholder="e.g. 6.5" />
+
+      <label for="lastFertilized">Last Fertilized (Days Ago):</label>
+      <input type="number" id="lastFertilized" placeholder="e.g. 15" />
+
+      <button onclick="checkSoil()">Check Soil Health</button>
+
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    function checkSoil() {
+      const soilType = document.getElementById("soilType").value;
+      const ph = parseFloat(document.getElementById("phLevel").value);
+      const days = parseInt(document.getElementById("lastFertilized").value);
+      const result = document.getElementById("result");
+
+      let message = "";
+      let bgColor = "";
+
+      if (ph < 5.5 || ph > 7.5) {
+        message += "⚠️ pH Level is not optimal for most plants. ";
+        bgColor = "#ffccbc";
+      } else {
+        message += "✅ pH Level is within healthy range. ";
+        bgColor = "#dcedc8";
+      }
+
+      if (days > 30) {
+        message += "Soil needs fertilizing.";
+      } else if (days <= 30 && days >= 10) {
+        message += "Soil is moderately nourished.";
+      } else {
+        message += "Soil is recently fertilized and healthy!";
+      }
+
+      result.style.display = "block";
+      result.style.background = bgColor;
+      result.innerText = message;
+    }
+  </script>
+
+</body>
+</html>

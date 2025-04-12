@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EcoNest - Solar Tracker</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fffde7;
+      margin: 0;
+      padding: 20px;
+      color: #f57f17;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .info-box {
+      flex: 1 1 45%;
+      background: #fff8e1;
+      border-left: 5px solid #fbc02d;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .info-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .info-box h3 {
+      color: #f9a825;
+      margin-bottom: 10px;
+    }
+
+    .info-box p {
+      font-size: 14px;
+      color: #5d4037;
+    }
+
+    .image-box {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    .image-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .tracker {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .tracker h2 {
+      text-align: center;
+      color: #f9a825;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #5d4037;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      background: #fbc02d;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #f57f17;
+    }
+
+    #result {
+      margin-top: 25px;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>☀️ Solar Energy Insights</h1>
+
+  <div class="section">
+    <div class="info-box">
+      <h3>Why Go Solar?</h3>
+      <p>
+        Solar energy reduces electricity bills, lowers greenhouse gas emissions, and promotes sustainable energy independence. A one-time setup leads to long-term savings.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Fun Fact 🔆</h3>
+      <p>
+        The sun delivers more energy to Earth in one hour than the world uses in a year. Tapping even a fraction of that can change everything.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>CO₂ Impact</h3>
+      <p>
+        For every kilowatt-hour (kWh) of solar power you generate, you offset approximately 0.7 kg of carbon dioxide emissions.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Eco Tip 🌱</h3>
+      <p>
+        Clean your solar panels regularly and track their output to ensure maximum efficiency throughout the year.
+      </p>
+    </div>
+
+    <div class="image-box">
+      <img src="https://images.unsplash.com/photo-1581091012184-2c9e4c36172b?auto=format&fit=crop&w=1000&q=60" alt="Solar Panel Image">
+    </div>
+  </div>
+
+  <div class="tracker">
+    <h2>📈 Solar Power Report</h2>
+
+    <label for="hasSolar">Do you have solar panels?</label>
+    <select id="hasSolar" onchange="toggleSolarInput()">
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <div id="solarInput" style="display:none;">
+      <label for="kwhGenerated">kWh Generated this month:</label>
+      <input type="number" id="kwhGenerated" placeholder="e.g. 120" />
+    </div>
+
+    <button onclick="calculateSolar()">Generate Report</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function toggleSolarInput() {
+      const hasSolar = document.getElementById('hasSolar').value;
+      document.getElementById('solarInput').style.display = hasSolar === 'yes' ? 'block' : 'none';
+    }
+
+    function calculateSolar() {
+      const hasSolar = document.getElementById('hasSolar').value;
+      const result = document.getElementById('result');
+
+      if (hasSolar === 'no') {
+        result.style.display = "block";
+        result.style.background = "#ffe082";
+        result.style.color = "#6d4c41";
+        result.innerText = "🌤 Consider installing solar panels to save money and help the planet!";
+      } else {
+        const kwh = parseFloat(document.getElementById('kwhGenerated').value) || 0;
+        const co2Saved = kwh * 0.7;
+
+        result.style.display = "block";
+        result.style.background = "#dcedc8";
+        result.style.color = "#33691e";
+        result.innerText = `✅ Awesome! You’ve saved approximately ${co2Saved.toFixed(1)} kg of CO₂ this month.`;
+      }
+    }
+  </script>
+
+</body>
+</html>
