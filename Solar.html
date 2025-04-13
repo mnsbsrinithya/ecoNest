@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <title>EcoNest - Solar Tracker</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -40,19 +38,10 @@
       transition: transform 0.3s ease;
     }
 
-    .info-box:hover {
-      transform: translateY(-5px);
-    }
+    .info-box:hover { transform: translateY(-5px); }
 
-    .info-box h3 {
-      color: #f9a825;
-      margin-bottom: 10px;
-    }
-
-    .info-box p {
-      font-size: 14px;
-      color: #5d4037;
-    }
+    .info-box h3 { color: #f9a825; margin-bottom: 10px; }
+    .info-box p { font-size: 14px; color: #5d4037; }
 
     .image-box {
       flex: 1 1 100%;
@@ -61,14 +50,13 @@
 
     .image-box img {
       max-width: 100%;
-      height: auto;
       border-radius: 12px;
       margin-top: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
 
     .tracker {
-      max-width: 500px;
+      max-width: 550px;
       margin: 50px auto;
       background: white;
       padding: 30px;
@@ -123,6 +111,39 @@
       display: none;
       font-size: 15px;
     }
+
+    #tipBox {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+      color: #6d4c41;
+      display: none;
+    }
+
+    .progress-bar {
+      margin-top: 15px;
+      height: 16px;
+      background: #c8e6c9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: #7cb342;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      font-style: italic;
+      color: #6d4c41;
+      background: #fff9c4;
+      padding: 15px;
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body>
@@ -132,34 +153,26 @@
   <div class="section">
     <div class="info-box">
       <h3>Why Go Solar?</h3>
-      <p>
-        Solar energy reduces electricity bills, lowers greenhouse gas emissions, and promotes sustainable energy independence. A one-time setup leads to long-term savings.
-      </p>
+      <p>Solar energy reduces electricity bills, lowers emissions, and promotes sustainable energy independence. A one-time setup brings long-term rewards.</p>
     </div>
 
     <div class="info-box">
       <h3>Fun Fact 🔆</h3>
-      <p>
-        The sun delivers more energy to Earth in one hour than the world uses in a year. Tapping even a fraction of that can change everything.
-      </p>
+      <p>The sun delivers more energy to Earth in one hour than the world uses in a year. Tapping even a fraction of that can change everything.</p>
     </div>
 
     <div class="info-box">
       <h3>CO₂ Impact</h3>
-      <p>
-        For every kilowatt-hour (kWh) of solar power you generate, you offset approximately 0.7 kg of carbon dioxide emissions.
-      </p>
+      <p>Every kWh of solar power offsets approx. 0.7 kg of carbon dioxide emissions. Small steps = big impact.</p>
     </div>
 
     <div class="info-box">
       <h3>Eco Tip 🌱</h3>
-      <p>
-        Clean your solar panels regularly and track their output to ensure maximum efficiency throughout the year.
-      </p>
+      <p>Clean your panels regularly and monitor output to maximize efficiency. Even a little dust reduces energy!</p>
     </div>
 
     <div class="image-box">
-      <img src="https://images.unsplash.com/photo-1581091012184-2c9e4c36172b?auto=format&fit=crop&w=1000&q=60" alt="Solar Panel Image">
+      <img src="https://i.pinimg.com/474x/65/a1/04/65a104c245756cfb2ac4d3920c181eb9.jpg" alt="Solar Panel">
     </div>
   </div>
 
@@ -175,36 +188,68 @@
     <div id="solarInput" style="display:none;">
       <label for="kwhGenerated">kWh Generated this month:</label>
       <input type="number" id="kwhGenerated" placeholder="e.g. 120" />
+
+      <label for="billSaved">Electricity bill this month (₹):</label>
+      <input type="number" id="billSaved" placeholder="e.g. 800" />
     </div>
 
     <button onclick="calculateSolar()">Generate Report</button>
 
+    <div class="progress-bar"><div class="progress" id="progressBar"></div></div>
     <div id="result"></div>
+    <div id="tipBox"></div>
+  </div>
+
+  <div class="footer">
+    ☀️ “Solar power – infinite energy, zero emissions.” – EcoNest
   </div>
 
   <script>
     function toggleSolarInput() {
       const hasSolar = document.getElementById('hasSolar').value;
       document.getElementById('solarInput').style.display = hasSolar === 'yes' ? 'block' : 'none';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('tipBox').style.display = 'none';
+      document.getElementById('progressBar').style.width = '0%';
     }
 
     function calculateSolar() {
       const hasSolar = document.getElementById('hasSolar').value;
       const result = document.getElementById('result');
+      const tipBox = document.getElementById('tipBox');
+      const progress = document.getElementById('progressBar');
 
       if (hasSolar === 'no') {
         result.style.display = "block";
         result.style.background = "#ffe082";
         result.style.color = "#6d4c41";
         result.innerText = "🌤 Consider installing solar panels to save money and help the planet!";
+        tipBox.style.display = "block";
+        tipBox.innerText = "💡 Tip: Explore local government subsidies or green loans for solar installation.";
+        progress.style.width = '10%';
       } else {
         const kwh = parseFloat(document.getElementById('kwhGenerated').value) || 0;
+        const bill = parseFloat(document.getElementById('billSaved').value) || 0;
         const co2Saved = kwh * 0.7;
+        const treesEquivalent = (co2Saved / 21).toFixed(1);  // 1 tree ~ 21kg CO2/year
+        const kmOffset = (co2Saved / 0.2).toFixed(0); // 1 km car ~ 0.2kg CO2
 
         result.style.display = "block";
         result.style.background = "#dcedc8";
         result.style.color = "#33691e";
-        result.innerText = `✅ Awesome! You’ve saved approximately ${co2Saved.toFixed(1)} kg of CO₂ this month.`;
+        result.innerHTML = `
+          ✅ You've saved <strong>${co2Saved.toFixed(1)} kg</strong> CO₂ this month.<br/>
+          🌳 Equivalent to planting <strong>${treesEquivalent}</strong> trees<br/>
+          🚗 or not driving <strong>${kmOffset}</strong> km!<br/>
+          💸 Estimated saving: ₹<strong>${(kwh * 6).toFixed(0)}</strong> this month.
+        `;
+
+        tipBox.style.display = "block";
+        tipBox.innerText = bill ? 
+          `💡 You saved ~₹${(bill * 0.6).toFixed(0)} this month. Reinforce this with battery backups!` : 
+          "🛠 Tip: Consider a solar battery to store unused power and maximize benefits.";
+
+        progress.style.width = Math.min((co2Saved / 100) * 100, 100) + "%";
       }
     }
   </script>
