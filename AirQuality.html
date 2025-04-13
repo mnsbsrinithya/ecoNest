@@ -80,7 +80,6 @@
       line-height: 1.5;
     }
 
-    /* Air Quality Checker Styling */
     .checker-box {
       background: white;
       border-radius: 20px;
@@ -113,6 +112,13 @@
       font-size: 15px;
     }
 
+    input:focus, select:focus {
+      outline: none;
+      border-color: #00796b;
+      box-shadow: 0 0 5px #80cbc4;
+      transition: 0.3s;
+    }
+
     button {
       margin-top: 20px;
       width: 100%;
@@ -130,6 +136,10 @@
       background: #004d40;
     }
 
+    button:active {
+      transform: scale(0.97);
+    }
+
     #result {
       margin-top: 25px;
       padding: 18px;
@@ -140,6 +150,53 @@
       display: none;
       color: #263238;
       box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .shake {
+      animation: shake 0.3s;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 220px;
+      background-color: #004d40;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -110px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
     }
 
     @media(max-width: 768px) {
@@ -158,12 +215,12 @@
 
   <h1>🌱 EcoNest - Air Quality Module</h1>
   <div class="intro">
-    <p>Welcome to EcoNest’s Air Quality Dashboard. Air pollution affects every breath we take. Through real-time monitoring and easy-to-use tools, we help you track and improve the air around you.</p>
+    <p id="typewriter-text">|</p>
   </div>
 
   <div class="main-grid">
     <div class="info-card">
-      <img src="air.jpeg" alt="Clean Air">
+      <img src="https://i.pinimg.com/474x/44/28/37/4428377cb2a8c4775ecbff600b394a7e.jpg" alt="Clean Air">
       <div class="card-content">
         <h3>Why Air Quality Matters</h3>
         <p>Poor air quality can lead to respiratory issues, fatigue, and long-term health risks. EcoNest helps you monitor it right from your home.</p>
@@ -171,7 +228,7 @@
     </div>
 
     <div class="info-card">
-      <img src="https://source.unsplash.com/400x200/?pollution,city" alt="Pollution">
+      <img src="https://i.pinimg.com/736x/69/2f/ae/692fae5ea13ec320ac3cc5b0207d47c0.jpg" alt="Pollution">
       <div class="card-content">
         <h3>Urban Pollution Impact</h3>
         <p>Traffic and industry in cities contribute major pollutants like PM2.5, NO2, and ozone. Know what's in the air near you, in real time.</p>
@@ -179,10 +236,19 @@
     </div>
 
     <div class="info-card">
-      <img src="https://source.unsplash.com/400x200/?forest,air" alt="Natural Filter">
+      <img src="https://i.pinimg.com/474x/11/03/9d/11039dc36f5cfba72f5058b2b8b6001e.jpg" alt="Natural Filter">
       <div class="card-content">
         <h3>Nature as a Filter</h3>
-        <p>Forests, wetlands, and green spaces naturally improve air quality. Learn how sustainable design can bring nature back into your environment.</p>
+        <p>Forests, wetlands, and green spaces naturally improve air quality. Learn how sustainable design can bring nature back into your environment.
+          Learn how sustainable design can bring nature back into your environment.
+          Learn how sustainable design can bring nature back into your environment.
+          Learn how sustainable design can bring nature back into your environment.
+
+          Learn how sustainable design can bring nature back into your environment.
+
+          Learn how sustainable design can bring nature back into your environment.
+
+        </p>
       </div>
     </div>
 
@@ -192,10 +258,14 @@
       <label for="aqi">Enter AQI (Air Quality Index):</label>
       <input type="number" id="aqi" placeholder="e.g. 75" />
 
-      <label for="pm25">PM2.5 (µg/m³):</label>
+      <label for="pm25" class="tooltip">PM2.5 (µg/m³):
+        <span class="tooltiptext">Fine particles that can penetrate lungs. Risky when above 35 µg/m³.</span>
+      </label>
       <input type="number" id="pm25" placeholder="e.g. 35" />
 
-      <label for="pm10">PM10 (µg/m³):</label>
+      <label for="pm10" class="tooltip">PM10 (µg/m³):
+        <span class="tooltiptext">Inhalable particles from dust/pollution. Keep below 50 µg/m³ ideally.</span>
+      </label>
       <input type="number" id="pm10" placeholder="e.g. 80" />
 
       <label for="pollutant">Main Pollutant:</label>
@@ -215,10 +285,21 @@
 
   <script>
     function checkAQI() {
-      const aqi = parseInt(document.getElementById('aqi').value);
+      const aqiInput = document.getElementById('aqi');
+      const aqi = parseInt(aqiInput.value);
       const result = document.getElementById('result');
 
+      if (isNaN(aqi)) {
+        result.style.display = 'block';
+        result.innerText = "Please enter a valid AQI.";
+        result.style.background = "#ffcdd2";
+        result.classList.add("shake");
+        setTimeout(() => result.classList.remove("shake"), 300);
+        return;
+      }
+
       result.style.display = 'block';
+      result.classList.add("fade-in");
 
       if (aqi <= 50) {
         result.innerText = "Good 🌿 — Air quality is healthy!";
@@ -234,6 +315,22 @@
         result.style.background = "#ffcdd2";
       }
     }
+
+    const typewriterText = "Welcome to EcoNest’s Air Quality Dashboard. Air pollution affects every breath we take. Through real-time monitoring and easy-to-use tools, we help you track and improve the air around you.";
+    let i = 0;
+    const speed = 20;
+
+    function typeWriter() {
+      if (i < typewriterText.length) {
+        document.getElementById("typewriter-text").innerHTML = typewriterText.substring(0, i+1) + '|';
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        document.getElementById("typewriter-text").innerHTML = typewriterText;
+      }
+    }
+
+    window.onload = typeWriter;
   </script>
 
 </body>
