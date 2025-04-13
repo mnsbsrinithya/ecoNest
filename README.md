@@ -1,5 +1,7 @@
 # ecoNest
 https://docs.google.com/presentation/d/12eaAqLNLJvmdjLs2-ZKMtFOIU2HaT1lN/edit?usp=sharing&ouid=114345966572843222885&rtpof=true&sd=true<br>
+
+Video link: https://youtu.be/NwRwBenukHw <br>
 EcoNest
 Welcome to EcoNest — a sustainable technology solution aimed at monitoring and managing environmental factors for households. The app integrates data on water, air, soil quality, energy efficiency, and more to help users reduce their carbon footprint, save resources, and contribute to a healthier planet.
 
