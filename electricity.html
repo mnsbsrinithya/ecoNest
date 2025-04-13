@@ -11,7 +11,7 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f3f4f6;
+      background: #f7fafc;
       margin: 0;
       padding: 20px;
       color: #333;
@@ -86,10 +86,11 @@
       border: 1px solid #ddd;
       font-size: 16px;
       background-color: #fafafa;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    input:focus {
+    input:hover {
+      transform: scale(1.05);
       background-color: #fff8e1;
       outline: none;
       border-color: #f57c00;
@@ -105,10 +106,11 @@
       border-radius: 12px;
       font-size: 18px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     button:hover {
+      transform: scale(1.05);
       background: #ff5722;
     }
 
@@ -119,41 +121,23 @@
       text-align: center;
     }
 
+    .icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .icon:hover {
+      transform: scale(1.2);
+    }
+
     canvas {
       margin-top: 40px;
       width: 100% !important;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-    }
-
-    /* Tooltip Styling */
-    .tooltip {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
-    }
-
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 120px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -60px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
     }
 
     /* Mobile Responsiveness */
@@ -178,44 +162,43 @@
 
       <div class="info-card">
         <h4>Why Track Your Usage?</h4>
-        <p>By tracking your electricity consumption, you can identify patterns and find opportunities to save on your energy bills, reduce waste, and minimize your environmental impact.</p>
+        <p>Tracking your electricity consumption helps you find ways to reduce energy costs, save money, and minimize your environmental impact.</p>
       </div>
 
       <div class="info-card">
-        <h4>What Are the Key Appliances?</h4>
-        <p>Air conditioners, lights, fridges, and fans all consume electricity in varying amounts. By monitoring their usage, you can make informed decisions to cut back on unnecessary consumption.</p>
+        <h4>Key Appliances</h4>
+        <p>Appliances like air conditioners, lights, and fridges consume electricity. Monitor them closely to manage your consumption better.</p>
       </div>
 
       <div class="info-card">
-        <h4>How Can I Save Energy?</h4>
-        <p>Simple steps like turning off appliances when not in use, using energy-efficient devices, or switching to LED lights can dramatically reduce energy consumption.</p>
+        <h4>Saving Energy Tips</h4>
+        <p>Use energy-efficient appliances, switch off devices when not in use, and consider renewable energy sources to lower consumption.</p>
       </div>
+      
     </div>
 
     <!-- Form Section -->
     <div class="form-section">
       <h3>💡 Enter Your Daily Appliance Usage</h3>
 
-      <label for="fan">Fan (hrs/day):</label>
-      <input type="number" id="fan" placeholder="e.g. 6" />
+      <label for="fan"><img src="https://img.icons8.com/ios/50/000000/fan.png" class="icon" alt="Fan"/> Fan (hrs/day):</label>
+      <input type="number" id="fan" placeholder="e.g. 6" oninput="calculateElectricity()" />
 
-      <label for="light">Light (hrs/day):</label>
-      <input type="number" id="light" placeholder="e.g. 5" />
+      <label for="light"><img src="https://img.icons8.com/ios/50/000000/light.png" class="icon" alt="Light"/> Light (hrs/day):</label>
+      <input type="number" id="light" placeholder="e.g. 5" oninput="calculateElectricity()" />
 
-      <label for="fridge">Fridge (hrs/day):</label>
-      <input type="number" id="fridge" placeholder="e.g. 24" />
+      <label for="fridge"><img src="https://img.icons8.com/ios/50/000000/fridge.png" class="icon" alt="Fridge"/> Fridge (hrs/day):</label>
+      <input type="number" id="fridge" placeholder="e.g. 24" oninput="calculateElectricity()" />
 
-      <label for="ac">AC (hrs/day):</label>
-      <input type="number" id="ac" placeholder="e.g. 3" />
-
-      <button onclick="calculateElectricity()">Generate Report</button>
+      <label for="ac"><img src="https://img.icons8.com/ios/50/000000/air-conditioner.png" class="icon" alt="AC"/> AC (hrs/day):</label>
+      <input type="number" id="ac" placeholder="e.g. 3" oninput="calculateElectricity()" />
 
       <div class="note">
-        <span class="tooltip">*More Info
-          <span class="tooltiptext">Approximate wattage: Fan (75W), Light (15W), Fridge (150W), AC (1000W).</span>
-        </span>
+        *Approximate wattage: Fan (75W), Light (15W), Fridge (150W), AC (1000W)
       </div>
 
+      <h4>Total Daily Usage: <span id="totalUsage">0</span> kWh</h4>
+      
       <canvas id="usageChart"></canvas>
     </div>
   </div>
@@ -229,7 +212,6 @@
       const fridgeHours = parseFloat(document.getElementById('fridge').value) || 0;
       const acHours = parseFloat(document.getElementById('ac').value) || 0;
 
-      // Approximate wattage for each appliance
       const wattages = {
         fan: 75,
         light: 15,
@@ -244,6 +226,9 @@
         AC: (acHours * wattages.ac) / 1000
       };
 
+      const totalUsage = Object.values(kWh).reduce((a, b) => a + b, 0).toFixed(2);
+      document.getElementById('totalUsage').textContent = totalUsage;
+
       const labels = Object.keys(kWh);
       const data = Object.values(kWh);
 
@@ -252,7 +237,7 @@
       if (chart) chart.destroy();
 
       chart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
           labels: labels,
           datasets: [{
@@ -264,6 +249,7 @@
         },
         options: {
           responsive: true,
+          cutoutPercentage: 60,
           plugins: {
             tooltip: {
               enabled: true,
@@ -280,6 +266,3 @@
 </body>
 </html>
 
-
-</body>
-</html>
