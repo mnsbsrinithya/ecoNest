@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoNest - Transforming the Future, One Home at a Time</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoNest - A Greener Future, One Home at a Time</title>
   <style>
     * {
       margin: 0;
@@ -13,193 +13,103 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f7f7f7;
+      background-color: #f5fdf6;
       color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-      margin: 0;
+      line-height: 1.6;
     }
 
     .container {
       max-width: 1200px;
-      width: 100%;
-      padding: 50px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      margin: 0 auto;
+      padding: 40px 20px;
       text-align: center;
-      margin-top: 30px;
     }
 
     h1 {
       font-size: 48px;
-      color: #2c3e50;
       font-weight: 600;
+      color: #2e7d32;
       margin-bottom: 20px;
-      line-height: 1.3;
     }
 
     p {
       font-size: 20px;
-      line-height: 1.8;
-      color: #555;
-      margin-bottom: 40px;
+      color: #4f4f4f;
+      margin-bottom: 30px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-img {
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
     }
 
     .btn {
-      padding: 15px 40px;
-      background: #f57c00;
+      padding: 14px 32px;
+      background: #66bb6a;
       color: #fff;
+      font-size: 18px;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s;
+      margin-top: 20px;
     }
 
     .btn:hover {
-      background: #ff5722;
-    }
-
-    .about {
-      margin-top: 50px;
-      padding: 30px;
-      background: #e3eaf1;
-      border-radius: 12px;
-    }
-
-    .about h2 {
-      font-size: 36px;
-      color: #2c3e50;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .about p {
-      font-size: 18px;
-      line-height: 1.8;
-      color: #777;
-      margin-bottom: 30px;
-    }
-
-    .features {
-      margin-top: 60px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .feature-card {
-      width: 250px;
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px);
-    }
-
-    .feature-card h3 {
-      font-size: 24px;
-      color: #f57c00;
-      margin-bottom: 15px;
-    }
-
-    .feature-card p {
-      color: #555;
-    }
-
-    /* Image placeholders */
-    .image-placeholder {
-      width: 100%;
-      height: 300px;
-      background-color: #ddd;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #777;
-      font-size: 18px;
-      margin-bottom: 30px;
+      background: #43a047;
     }
 
     .footer {
-      margin-top: 40px;
-      padding: 20px 30px;
-      background: #2c3e50;
+      background: #2e7d32;
       color: #fff;
       text-align: center;
-      width: 100%;
+      padding: 20px;
+      margin-top: 60px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Main Content -->
   <div class="container">
     <h1>Welcome to EcoNest</h1>
-    <p>Our mission is simple: to help people live sustainably and make small changes that can lead to a big impact. At EcoNest, we believe every house can be the starting point for global change.</p>
-    
-    <!-- Placeholder for Hero Image -->
-    <div class="image-placeholder">
-      <span>Hero Image Placeholder</span>
+    <p>
+      In a world where time is scarce and environmental challenges are plenty, EcoNest brings a calm and powerful solution—sustainability made simple. 
+      With so many tools addressing water, air, and land quality separately, it's hard for people to keep up. 
+      That’s why we’ve created one intuitive space to begin—your home. 
+    </p>
+
+    <!-- Hero Image Placeholder -->
+    <div class="hero-img">
+      <a href="#">
+        <img src="https://i.pinimg.com/736x/33/0e/c2/330ec2a0ee3f504deb947118e9545d5b.jpg" alt="EcoNest Future Homes"/>
+      </a>
     </div>
 
-    <button class="btn">Learn More</button>
+    <p>
+      Every individual has the power to shape the planet. If one home starts making conscious choices, a neighborhood changes.
+      If every neighborhood joins in, a community evolves. And soon, we’re building a greener, safer world—together.
+    </p>
+
+    <button class="btn">Explore EcoNest</button>
   </div>
 
-  <!-- About Us Section -->
-  <div class="about">
-    <h2>Why EcoNest?</h2>
-    <p>In a world with so many environmental issues, from energy consumption to water scarcity, it’s easy to feel overwhelmed. But the truth is, change doesn’t have to be difficult. EcoNest simplifies the process by helping you track and reduce your environmental impact—starting from your home.</p>
-    <p>While there are many apps and solutions out there addressing climate change, air pollution, or water conservation, the challenge is this: people don't have time. We're all busy. So, why not take it one step at a time, starting with something manageable?</p>
-    <p>EcoNest aims to help you take small, consistent steps that lead to greater change. If every household adopts these habits, we can start a global movement of sustainability, one home at a time.</p>
-    
-    <!-- Placeholder for About Image -->
-    <div class="image-placeholder">
-      <span>About Image Placeholder</span>
-    </div>
-  </div>
-
-  <!-- Features Section -->
-  <div class="features">
-    <div class="feature-card">
-      <h3>Track Your Energy Usage</h3>
-      <p>Start by monitoring your electricity consumption and identify areas where you can save energy and reduce costs.</p>
-      <!-- Placeholder for Feature Image -->
-      <div class="image-placeholder">
-        <span>Energy Usage Image Placeholder</span>
-      </div>
-    </div>
-    <div class="feature-card">
-      <h3>Conserve Water</h3>
-      <p>Simple actions like turning off faucets when not in use can have a massive impact on conserving this precious resource.</p>
-      <!-- Placeholder for Feature Image -->
-      <div class="image-placeholder">
-        <span>Water Conservation Image Placeholder</span>
-      </div>
-    </div>
-    <div class="feature-card">
-      <h3>Live Sustainably</h3>
-      <p>Get tips and insights on how to reduce your environmental footprint and make eco-friendly choices every day.</p>
-      <!-- Placeholder for Feature Image -->
-      <div class="image-placeholder">
-        <span>Sustainability Image Placeholder</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
   <div class="footer">
-    <p>&copy; 2025 EcoNest. Together, we can make a difference.</p>
+    &copy; 2025 EcoNest — One Home. One Change. One Future.
   </div>
-
 </body>
 </html>
+
