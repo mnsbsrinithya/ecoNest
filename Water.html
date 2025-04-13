@@ -10,15 +10,25 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #e3f2fd;
+      background: linear-gradient(to right, #e0f7fa, #e1f5fe);
       margin: 0;
-      padding: 20px;
+      padding: 30px;
       color: #01579b;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 10px;
+      color: #01579b;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 700px;
+      margin: auto;
+      margin-bottom: 40px;
+      font-size: 16px;
+      color: #0277bd;
     }
 
     .overview {
@@ -68,7 +78,7 @@
 
     .tracker {
       max-width: 450px;
-      margin: 40px auto;
+      margin: 50px auto;
       background: white;
       padding: 30px;
       border-radius: 16px;
@@ -78,12 +88,14 @@
     .tracker h2 {
       text-align: center;
       color: #0277bd;
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
       margin-top: 20px;
       font-weight: 600;
+      color: #01579b;
     }
 
     input, select {
@@ -93,6 +105,12 @@
       border-radius: 10px;
       border: 1px solid #bbb;
       font-size: 15px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0288d1;
+      box-shadow: 0 0 6px #b2ebf2;
     }
 
     button {
@@ -114,18 +132,51 @@
 
     #feedback {
       margin-top: 25px;
-      padding: 16px;
+      padding: 18px;
       border-radius: 12px;
       text-align: center;
       font-weight: bold;
       display: none;
-      font-size: 15px;
+      font-size: 16px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .shake {
+      animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @media(max-width: 768px) {
+      .overview {
+        flex-direction: column;
+      }
+
+      .info-box {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
   <h1>🚰 Water Sustainability Insights</h1>
+  <div class="intro">
+    <p id="typewriter-text">|</p>
+  </div>
 
   <div class="overview">
     <div class="info-box">
@@ -158,7 +209,7 @@
     </div>
 
     <div class="image-box">
-      <img src="https://images.unsplash.com/photo-1586082035684-940ef54c920d?auto=format&fit=crop&w=900&q=60" alt="Water conservation" />
+      <img src="https://i.pinimg.com/474x/39/96/68/399668127eaabd35a1b1d458fb246a8f.jpg" alt="Water conservation" />
     </div>
   </div>
 
@@ -183,12 +234,24 @@
 
   <script>
     function analyzeWater() {
-      const liters = parseInt(document.getElementById('liters').value);
+      const litersInput = document.getElementById('liters');
+      const liters = parseInt(litersInput.value);
       const feedback = document.getElementById('feedback');
+      feedback.classList.remove("shake", "fade-in");
+
+      if (isNaN(liters) || liters <= 0) {
+        feedback.style.display = 'block';
+        feedback.innerText = "🚫 Please enter a valid water usage amount.";
+        feedback.style.background = "#ffcdd2";
+        feedback.style.color = "#b71c1c";
+        feedback.classList.add("shake");
+        return;
+      }
+
       feedback.style.display = 'block';
+      feedback.classList.add("fade-in");
 
       const average = 250;
-
       if (liters <= average) {
         feedback.innerText = "✅ On track! Your water usage is within the average range.";
         feedback.style.background = "#b2ebf2";
@@ -196,11 +259,27 @@
       } else {
         const excess = liters - average;
         const percent = Math.round((excess / average) * 100);
-        feedback.innerText = `⚠️ High Usage! You're using ${percent}% more water than average.`;
+        feedback.innerText = `⚠️ High Usage! You're using ${percent}% more water than average. Time to save!`;
         feedback.style.background = "#ffe082";
         feedback.style.color = "#e65100";
       }
     }
+
+    const typewriterText = "Water is life's most precious resource. Monitor, analyze, and conserve with EcoNest's Water Tracker.";
+    let i = 0;
+    const speed = 25;
+
+    function typeWriter() {
+      if (i < typewriterText.length) {
+        document.getElementById("typewriter-text").innerHTML = typewriterText.substring(0, i+1) + '|';
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        document.getElementById("typewriter-text").innerHTML = typewriterText;
+      }
+    }
+
+    window.onload = typeWriter;
   </script>
 
 </body>
