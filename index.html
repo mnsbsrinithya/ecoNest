@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ecoNest</title>
+  <title>EcoNest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -15,6 +16,9 @@
       font-family: 'Inter', sans-serif;
       background: #f9f6ff;
       color: #2b2b2b;
+      
+        margin: 0;
+      
     }
 
     header {
@@ -59,6 +63,10 @@
       display: flex;
       align-items: center;
       padding: 4rem;
+      padding-left: 2rem;
+      background: linear-gradient(to right, #065717, #5ebd67);
+      padding-bottom: 0px;
+      
     }
 
     .hero-text {
@@ -83,17 +91,22 @@
       border-radius: 8px;
       font-weight: 600;
     }
-
+    .hero-image img {
+      width: 120%; 
+      height: auto;
+      border-radius: 1rem;
+      border-bottom: 0px;
+    }
     .hero-image {
       flex: 1;
-      position: relative;
+      display: flex;
+      justify-content: center; 
+      align-items: center;    
     }
+        
+    
 
-    .hero-image img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 1rem;
-    }
+    
 
     .bubble {
       position: absolute;
@@ -192,19 +205,41 @@
     margin-top: 2rem;
   }
   
-  
   .card {
-    background: #fff;
-    padding: 1.5rem;
+    width: 200px;
+    height: 300px; 
+    background-color: white;
+    padding: 16px;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    max-width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .card img {
     width: 100%;
+    height: 160px;
+    object-fit: cover;
     border-radius: 8px;
   }
+  
+  
+  
+  .card img {
+    width: 100%;
+    height: 160px; 
+    object-fit: cover; 
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  
+  
+  
+  
+  
   
   .card h3 {
     margin-top: 1rem;
@@ -266,11 +301,11 @@
   }
   
   
-    </style>
+  </style>
 </head>
 <body>
   <header>
-    <div><strong>ecoNest</strong></div>
+    <div><strong>EcoNest</strong></div>
     <nav class="nav-links">
       <a href="#">Home</a>
       <a href="#">About us</a>
@@ -286,13 +321,14 @@
   <section class="hero">
     <div class="hero-text">
       <h1>Eco Awareness made simple</h1>
-      <p>Track,learn and transform your environmental impact with ecoNest-your personal sustainability dashboard</p>
+      <p style="color: white;">Track,learn and transform your environmental impact with ecoNest-your personal sustainability dashboard</p>
       <a href="carousle.html">
   <button>Explore now</button>
 </a>
     </div>
+    
     <div class="hero-image">
-      <img src="heroimg.jpg" alt="img">
+      <img src="h1.png" alt="img">
       </div>
     </div>
   </section>
@@ -307,7 +343,7 @@
   
   <section class="benefits-section">
     <div class="benefits-image">
-      <img src="img.png" alt="img" />
+      <img src="img1.png" alt="img" />
     </div>
     <div class="benefits-text">
       <h2>Benefits From Our ecoNest</h2>
@@ -323,26 +359,26 @@
   
   
   <section class="options-section">
-    <h2>Our trackers</h2>
+    <h2>Our Services</h2>
     <div class="option-cards">
       <div class="card">
-        <img src="" alt="img" />
+        <img src="air.jpeg" alt="img" />
         <h3>Air purity metric</h3>
       </div>
       <div class="card">
-        <img src="" alt="img" />
+        <img src="soil.jpeg" alt="img" />
         <h3>Soil fertility metric</h3>
       </div>
       <div class="card">
-        <img src="" alt="img" />
-        <h3>Electricity usage tracker</h3>
+        <img src="electric.jpeg" alt="img" />
+        <h3>Electricity usage metric</h3>
       </div>
       <div class="card">
-        <img src="" alt="img" />
-        <h3>Water uage tracker</h3>
+        <img src="water.jpeg" alt="img" />
+        <h3>Water uage metric</h3>
       </div>
       <div class="card">
-        <img src="" alt="img" />
+        <img src="solar.jpeg" alt="img" />
         <h3>solarpower usage metric</h3>
       </div>
     </div>
@@ -360,7 +396,7 @@
     </div>
   </section>
   <footer class="green-footer">
-    <p>&copy; 2025 ecoNest. All rights reserved.</p>
+    <p>&copy; 2025 EcoNest. All rights reserved.</p>
   </footer>
   
   
