@@ -45,6 +45,11 @@
       border-radius: 12px;
       margin-bottom: 20px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-3px);
     }
 
     .info-card h4 {
@@ -62,6 +67,7 @@
       width: 100%;
       border-radius: 14px;
       margin-top: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     }
 
     .form-section {
@@ -70,6 +76,12 @@
       border-radius: 16px;
       padding: 30px;
       box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .form-section h3 {
@@ -113,12 +125,49 @@
 
     #result {
       margin-top: 25px;
-      padding: 15px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 14px;
       font-weight: bold;
       text-align: center;
       display: none;
       font-size: 15px;
+      animation: bounceIn 0.4s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #tip {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #4e342e;
+      text-align: center;
+      display: none;
+    }
+
+    .fun-fact {
+      margin-top: 35px;
+      background: #f0f4c3;
+      padding: 15px;
+      font-size: 14px;
+      text-align: center;
+      border-radius: 12px;
+      color: #33691e;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #6d4c41;
+      font-style: italic;
+      padding: 15px;
+      background: #e8f5e9;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
   </style>
 </head>
@@ -143,7 +192,7 @@
         <p>Mix organic compost every few weeks. It boosts nutrients and balances soil texture naturally.</p>
       </div>
 
-      <img src="https://images.unsplash.com/photo-1606925797305-6f1f5c05cfa6?auto=format&fit=crop&w=1000&q=60" alt="Soil with plants">
+      <img src="https://i.pinimg.com/474x/01/2c/28/012c285aaa73184e99cfacb7a9b73fa5.jpg" alt="Soil with plants">
     </div>
 
     <div class="form-section">
@@ -165,7 +214,15 @@
       <button onclick="checkSoil()">Check Soil Health</button>
 
       <div id="result"></div>
+      <div id="tip"></div>
+      <div id="funFact" class="fun-fact">
+        🌍 Did you know? A single teaspoon of healthy soil can contain more microorganisms than there are people on Earth!
+      </div>
     </div>
+  </div>
+
+  <div class="footer">
+    🌸 "Healthy soil is the heartbeat of a thriving Earth." – EcoNest
   </div>
 
   <script>
@@ -174,29 +231,43 @@
       const ph = parseFloat(document.getElementById("phLevel").value);
       const days = parseInt(document.getElementById("lastFertilized").value);
       const result = document.getElementById("result");
+      const tip = document.getElementById("tip");
+      const funFact = document.getElementById("funFact");
 
       let message = "";
       let bgColor = "";
+      let tipText = "";
 
+      // pH analysis
       if (ph < 5.5 || ph > 7.5) {
-        message += "⚠️ pH Level is not optimal for most plants. ";
-        bgColor = "#ffccbc";
+        message += "⚠️ Unbalanced pH. ";
+        bgColor = "#ffe082";
+        tipText += "Try adding lime (for acidic soil) or sulfur (for alkaline soil). ";
       } else {
-        message += "✅ pH Level is within healthy range. ";
+        message += "✅ Balanced pH. ";
         bgColor = "#dcedc8";
       }
 
+      // Fertilization analysis
       if (days > 30) {
-        message += "Soil needs fertilizing.";
-      } else if (days <= 30 && days >= 10) {
-        message += "Soil is moderately nourished.";
+        message += "Fertilization needed. 🌾";
+        tipText += "Consider composting or using organic fertilizers.";
+      } else if (days >= 10 && days <= 30) {
+        message += "Soil moderately nourished. 👍";
+        tipText += "Maintain current schedule or test nutrient levels.";
       } else {
-        message += "Soil is recently fertilized and healthy!";
+        message += "Soil is well-nourished! 🌱";
+        tipText += "Great job! Maintain regular composting.";
       }
 
       result.style.display = "block";
       result.style.background = bgColor;
       result.innerText = message;
+
+      tip.style.display = "block";
+      tip.innerText = "📝 Tip: " + tipText;
+
+      funFact.style.display = "none"; // Hide fun fact after interaction
     }
   </script>
 
